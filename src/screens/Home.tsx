@@ -12,7 +12,6 @@ import { colors } from "../constants/color";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Item } from "./type";
 
-
 const { height } = Dimensions.get("window");
 
 const Home = () => {
