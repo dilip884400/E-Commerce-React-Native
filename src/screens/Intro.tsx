@@ -10,11 +10,12 @@ import React from "react";
 import { intro } from "../assets";
 import { colors } from "../constants/color";
 import { useNavigation } from "@react-navigation/native";
+import { NavigationProps } from "./type";
 
 const { height } = Dimensions.get("window");
 
 const Intro = () => {
-  const navigation: any = useNavigation();
+  const navigation: NavigationProps = useNavigation();
   return (
     <View style={styles.container}>
       {/* top */}

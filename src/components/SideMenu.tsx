@@ -1,12 +1,15 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const SideMenu = () => {
   return (
-    <View>
-      <Text>SideMenu</Text>
-    </View>
-  )
-}
+    <SafeAreaView>
+      <View>
+        <Text>SideMenu</Text>
+      </View>
+    </SafeAreaView>
+  );
+};
 
-export default SideMenu
+export default SideMenu;
