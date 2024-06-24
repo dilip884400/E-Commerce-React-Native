@@ -16,7 +16,8 @@ export interface ProductsProps{
     category:string;
     description:string;
     image:string;
-    isNew:bigint;
+    isNew:boolean;
+    price:number;
     previousPrice:number;
     quantity:string;
     title:string;

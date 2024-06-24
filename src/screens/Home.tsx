@@ -5,16 +5,25 @@ import {
   StyleSheet,
   Text,
   View,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { colors } from "../constants/color";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Item } from "./type";
+import { Item, NavigationProps } from "./type";
+import Carousel from "react-native-reanimated-carousel";
+import { bannerOne, bannerThree, bannerTwo } from "../assets";
+import Animated from "react-native-reanimated"; // Ensure correct import for Animated
+import { useNavigation } from "@react-navigation/native";
+import { ShoppingCartIcon } from "react-native-heroicons/outline";
+import IsNewBadge from "../components/IsNewBadge";
+import Loader from "../components/Loader";
 
 const { height } = Dimensions.get("window");
+const width = Dimensions.get("window").width;
 
 const Home = () => {
+  const navigation: any = useNavigation();
   const [productsArray, setProductsArray] = useState([]);
   const [refreshing, setRefresing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -35,14 +44,62 @@ const Home = () => {
     getData();
   }, []);
 
+  const images = [bannerOne, bannerTwo, bannerThree];
+
   const RenderItem = ({ item }: Item) => {
     return (
-      <TouchableOpacity style={styles.productView}>
+      <TouchableOpacity
+        style={styles.productView}
+        onPress={() =>
+          navigation.navigate("ProductDetails", {
+            _id: item?._id,
+          })
+        }
+      >
         <Image
           source={{ uri: item?.image }}
           alt="product-image"
           style={styles.img}
         />
+        <View style={styles.textView}>
+          <Text>{item?.title}</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginVertical: 5,
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontWeight: "600",
+                  color: colors.textBlack,
+                  fontSize: 12,
+                }}
+              >
+                ${item?.price}
+              </Text>
+              <Text
+                style={{ fontSize: 12, textDecorationLine: "line-through" }}
+              >
+                ${item?.previousPrice}
+              </Text>
+            </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: colors.designColor,
+                paddingHorizontal: 10,
+                paddingVertical: 7,
+                borderRadius: 6,
+              }}
+            >
+              <ShoppingCartIcon size={20} color={colors.textBlack} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        {item?.isNew && <IsNewBadge />}
       </TouchableOpacity>
     );
   };
@@ -52,18 +109,44 @@ const Home = () => {
       <Header />
       <View>
         {isLoading ? (
-          <Text>Loader</Text>
+          <Loader title="Product is Loading..."/>
         ) : (
           <FlatList
             data={productsArray}
             contentContainerStyle={styles.container}
-            keyExtractor={(item: any) => item?.id}
+            keyExtractor={(item: any) => item?._id}
             renderItem={RenderItem}
             refreshing={refreshing}
             onRefresh={() => {
               getData();
             }}
             numColumns={2}
+            ListHeaderComponent={
+              <View>
+                <Carousel
+                  loop
+                  width={width}
+                  style={{ height: 210 }}
+                  autoPlay={true}
+                  data={images}
+                  scrollAnimationDuration={1000}
+                  renderItem={({ item }) => {
+                    return (
+                      <View>
+                        <Animated.Image // Use Animated.Image instead of Image
+                          source={item}
+                          style={{
+                            width: "100%",
+                            height: 270,
+                            objectFit: "cover",
+                          }}
+                        />
+                      </View>
+                    );
+                  }}
+                />
+              </View>
+            }
           />
         )}
       </View>
@@ -82,8 +165,16 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: colors.lightText,
     margin: 5,
+    borderRadius: 6,
+    marginHorizontal: 10,
   },
-  img: {},
+  img: {
+    height: "68%",
+    width: "80%",
+  },
+  textView: {
+    padding: 10,
+  },
 });
 
 export default Home;
