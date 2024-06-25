@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import CommonHeader from "../components/CommonHeader";
 import { ProductsProps } from "./type";
 import { colors } from "../constants/color";
+import Loader from "../components/Loader";
+import DetailsView from "../components/DetailsView";
+import PriceFormate from "../components/PriceFormate";
 
 const { height, width } = Dimensions.get("window");
 
@@ -19,6 +22,7 @@ const ProductDetails = ({ route }: any) => {
         `https://jsonserver.reactbd.com/amazonpro/${_id}`
       );
       const json = await response.json();
+      console.log(json, "Product Detials Data");
       setProductData(json);
       setIsLoading(false);
     } catch (error) {
@@ -33,17 +37,29 @@ const ProductDetails = ({ route }: any) => {
   return (
     <View>
       <CommonHeader title="Product Details" />
-      <View style={styles.container}>
-        <View style={styles.imgView}>
-          {productData?.image && (
-            <Image
-              source={{ uri: productData?.image }}
-              alt="product-image"
-              style={styles.img}
-            />
-          )}
+      {isLoading ? (
+        <Loader title="Product Details is Loading" />
+      ) : (
+        <View style={styles.container}>
+          <View style={styles.imgView}>
+            {productData?.image && (
+              <Image
+                source={{ uri: productData?.image }}
+                alt="product-image"
+                style={styles.img}
+              />
+            )}
+          </View>
+          <DetailsView productData={productData} />
+          <View style={styles.bottomMenu}>
+            <View>
+              <Text>
+                <PriceFormate amount={productData?.price} />
+              </Text>
+            </View>
+          </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };
@@ -77,6 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     backgroundColor: colors.bgColor,
+    marginBottom:20,
   },
 });
 

@@ -33,6 +33,7 @@ const Home = () => {
       setIsLoading(true);
       const response = await fetch("https://jsonserver.reactbd.com/amazonpro");
       const json = await response.json();
+      console.log(json, "All Products");
       setProductsArray(json);
       setIsLoading(false);
     } catch (error) {
@@ -109,7 +110,7 @@ const Home = () => {
       <Header />
       <View>
         {isLoading ? (
-          <Loader title="Product is Loading..."/>
+          <Loader title="Product is Loading..." />
         ) : (
           <FlatList
             data={productsArray}
