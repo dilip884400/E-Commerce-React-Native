@@ -4,6 +4,9 @@ import { colors } from "../constants/color";
 import PriceFormate from "./PriceFormate";
 
 const DetailsView = ({ productData }: any) => {
+
+
+  console.log(productData,"productData")
   return (
     <View style={{ marginHorizontal: 20 }}>
       <Text
@@ -21,7 +24,7 @@ const DetailsView = ({ productData }: any) => {
       <Text>
         Category:{" "}
         <Text style={{ color: colors.textBlack, fontWeight: "600" }}>
-          {productData?.Category}
+          {productData?.category}
         </Text>
       </Text>
       <Text style={{ marginVertical: 5, color: colors.designColor }}>

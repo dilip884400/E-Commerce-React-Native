@@ -2,10 +2,10 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { colors } from "../constants/color";
 
-const IsNewBadge = () => {
+const IsNewBadge = ({ customStyle, title }: any) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>New</Text>
+    <View style={[styles.container, customStyle]}>
+      <Text style={styles.text}>{title ? title : "New"}</Text>
     </View>
   );
 };

@@ -5,22 +5,24 @@ import { colors } from "../constants/color";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { logo } from "../assets";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 const Header = () => {
-  const navaigation:any = useNavigation()
+  const navaigation: any = useNavigation();
+  const { productData } = useSelector((state: any) => state?.orebi);
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Pressable onPress={()=>navaigation.openDrawer()}>
+        <Pressable onPress={() => navaigation.openDrawer()}>
           <Bars4Icon
             color={colors.textBlack}
             fill={colors.textBlack}
             size={20}
           />
         </Pressable>
-        <Pressable onPress={()=>navaigation.navigate("Home")}>
+        <Pressable onPress={() => navaigation.navigate("Home")}>
           <Image source={logo} alt="logo-icon" style={styles.logo} />
         </Pressable>
-        <Pressable onPress={()=>navaigation.navigae("Cart")}>
+        <Pressable onPress={() => navaigation.navigae("Cart")}>
           <ShoppingCartIcon
             color={colors.textBlack}
             // fill={colors.textBlack}
@@ -28,7 +30,9 @@ const Header = () => {
           />
 
           <View style={styles.cartCount}>
-            <Text style={styles.cartText}>0</Text>
+            <Text style={styles.cartText}>
+              {productData?.length > 0 ? productData?.length : 0}
+            </Text>
           </View>
         </Pressable>
       </View>

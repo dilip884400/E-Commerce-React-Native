@@ -1,4 +1,11 @@
-import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  Pressable,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import CommonHeader from "../components/CommonHeader";
 import { ProductsProps } from "./type";
@@ -6,6 +13,11 @@ import { colors } from "../constants/color";
 import Loader from "../components/Loader";
 import DetailsView from "../components/DetailsView";
 import PriceFormate from "../components/PriceFormate";
+import { ArrowRightIcon } from "react-native-heroicons/outline";
+import IsNewBadge from "../components/IsNewBadge";
+import { addToCart } from "../redux/orebiSlices";
+import Toast from "react-native-toast-message";
+import { useDispatch } from "react-redux";
 
 const { height, width } = Dimensions.get("window");
 
@@ -14,6 +26,8 @@ const ProductDetails = ({ route }: any) => {
 
   const [productData, setProductData] = useState<ProductsProps | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const getData = async () => {
     try {
@@ -53,11 +67,70 @@ const ProductDetails = ({ route }: any) => {
           <DetailsView productData={productData} />
           <View style={styles.bottomMenu}>
             <View>
-              <Text>
+              <Text
+                style={{
+                  color: colors.defaultWhite,
+                  fontWeight: "600",
+                  fontSize: 16,
+                }}
+              >
                 <PriceFormate amount={productData?.price} />
               </Text>
+              <Text
+                style={{
+                  color: colors.defaultWhite,
+                  textDecorationLine: "line-through",
+                  fontWeight: "600",
+                  fontSize: 16,
+                }}
+              >
+                <PriceFormate amount={productData?.previousPrice} />
+              </Text>
             </View>
+            <Pressable
+              onPress={() =>
+                dispatch(
+                  addToCart(productData),
+                  Toast.show({
+                    type: "success",
+                    text1: `${productData.title} added successfully`,
+                  })
+                )
+              }
+              style={{
+                backgroundColor: colors.designColor,
+                paddingHorizontal: 10,
+                paddingVertical: 8,
+                borderRadius: 6,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 600,
+                  marginRight: 5,
+                  color: colors.textBlack,
+                }}
+              >
+                Add to Cart
+              </Text>
+              <ArrowRightIcon size={16} color={colors.textBlack} />
+            </Pressable>
           </View>
+          {productData?.isNew && (
+            <IsNewBadge
+              customStyle={{
+                right: 20,
+                top: 20,
+                paddingVertical: 6,
+                paddingHorizontal: 10,
+                borderRadius: 6,
+              }}
+              title="New Arrival"
+            />
+          )}
         </View>
       )}
     </View>
@@ -93,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     backgroundColor: colors.bgColor,
-    marginBottom:20,
+    marginBottom: 20,
   },
 });
 

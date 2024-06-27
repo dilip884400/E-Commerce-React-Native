@@ -10,9 +10,11 @@ import { colors } from "../constants/color";
 import { useNavigation } from "@react-navigation/native";
 import { NavigationProps } from "../screens/type";
 import { logo } from "../assets";
+import { useSelector } from "react-redux";
 
 const CommonHeader = ({ title }: { title: string }) => {
   const navigation: NavigationProps = useNavigation();
+  const { productData } = useSelector((state: any) => state?.orebi);
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -42,7 +44,9 @@ const CommonHeader = ({ title }: { title: string }) => {
           />
 
           <View style={styles.cartCount}>
-            <Text style={styles.cartText}>0</Text>
+            <Text style={styles.cartText}>
+              {productData?.length > 0 ? productData?.length : 0}
+            </Text>
           </View>
         </Pressable>
       </View>
