@@ -11,7 +11,7 @@ const Cart = () => {
   return (
     <View>
       <CommonHeader title="Cart" />
-      <ScrollView>
+      <ScrollView contentContainerStyle={{paddingBottom:100, margin:10}}>
         {productData.length > 0 ? (
           <View>
             {productData?.map((item: ProductsProps) => (
