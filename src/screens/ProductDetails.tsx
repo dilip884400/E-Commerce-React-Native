@@ -36,7 +36,6 @@ const ProductDetails = ({ route }: any) => {
         `https://jsonserver.reactbd.com/amazonpro/${_id}`
       );
       const json = await response.json();
-      console.log(json, "Product Detials Data");
       setProductData(json);
       setIsLoading(false);
     } catch (error) {

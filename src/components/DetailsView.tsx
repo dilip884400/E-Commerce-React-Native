@@ -4,9 +4,6 @@ import { colors } from "../constants/color";
 import PriceFormate from "./PriceFormate";
 
 const DetailsView = ({ productData }: any) => {
-
-
-  console.log(productData,"productData")
   return (
     <View style={{ marginHorizontal: 20 }}>
       <Text

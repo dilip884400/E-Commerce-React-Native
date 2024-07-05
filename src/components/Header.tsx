@@ -22,7 +22,7 @@ const Header = () => {
         <Pressable onPress={() => navaigation.navigate("Home")}>
           <Image source={logo} alt="logo-icon" style={styles.logo} />
         </Pressable>
-        <Pressable onPress={() => navaigation.navigae("Cart")}>
+        <Pressable onPress={() => navaigation.navigate("Cart")}>
           <ShoppingCartIcon
             color={colors.textBlack}
             // fill={colors.textBlack}

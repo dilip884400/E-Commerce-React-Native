@@ -37,6 +37,16 @@ const Intro = () => {
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
+      <View
+        style={{alignItems:"flex-end", margin:10}}
+      >
+        <Text style={{
+         color:"gray"
+        }}> Designed & Developed by </Text>
+        <Text style={{
+         color:"gray"
+        }}>- Dilip Lovevanshi</Text>
+      </View>
     </View>
   );
 };

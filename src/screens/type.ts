@@ -19,7 +19,7 @@ export interface ProductsProps{
     isNew:boolean;
     price:number;
     previousPrice:number;
-    quantity:string;
+    quantity:any;
     title:string;
     _id:number;
 }
